@@ -121,8 +121,6 @@ class MotorImageryDataset:
                 trial = self.raw[channel, start:stop]
                 trials.append(trial)
 
-                print(start, stop)
-
             except:
                 continue
 
