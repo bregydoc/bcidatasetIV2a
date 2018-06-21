@@ -127,6 +127,10 @@ class MotorImageryDataset:
                 continue
 
         return trials, classes
+
+datasetA1 = MotorImageryDataset()
+trials, classes = datasetA1.get_trials_from_channel()
+# trials contains the N valid trials, and clases its related class.
 ```
 
 ## Contribute
