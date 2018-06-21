@@ -77,7 +77,7 @@ The result of this code is the plot of the one trial.
 
 ### One more complex example
 
-In this example I've create a class with a method for extract all trials of one subject (AT01 in the example).
+In this example I've create a class with a method for extract all trials of one subject (AT01 in the example). Notate that try catch is here because some trial have a reject event, then with this try/catch I select only valid trials.
 
 ```python
 class MotorImageryDataset:
