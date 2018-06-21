@@ -64,7 +64,7 @@ class MotorImageryDataset:
         return trials_c, classes_c
 
 
-datasetA1 = MotorImageryDataset('../A01T.npz')
+datasetA1 = MotorImageryDataset('A01T.npz')
 trials, classes = datasetA1.get_trials_from_channels([7, 9, 11])
 
 
