@@ -41,30 +41,34 @@ The names convention used for each datafile is the next:
 I propose a simple example for understand more how to can to extract a trial.
 
 ```python
+from matplotlib import pyplot as plt
 import numpy as np
-data = np.load('A01T.npz') # data contains the data of the subject 1
+data = np.load('A01T.npz')  # data contains the data of the subject 1
 signal = data['s']
-channelC3 = signal[7] # The index 7 represent the channel C3, for the info of each channel read the original paper.
+# The index 7 represent the channel C3, for the info of each channel read the original paper.
+channelC3 = signal[:, 7]
 
-x = 7 # this is the event number that I want to extract
+x = 7  # this is the event number that I want to extract
 
-etype = data['etyp'].T[0, x] # Extract the type of the event 7 in this case the type is 768 (in the table this is a Start of a trial event).
-epos = data['epos'].T[0, x] # This is the position of the event in the raw signal
-edur = data['edur'].T[0, x] # And this is the duration of this event
+# Extract the type of the event 7 in this case the type is 768 (in the table this is a Start of a trial event).
+etype = data['etyp'].T[0, x]
+# This is the position of the event in the raw signal
+epos = data['epos'].T[0, x]
+edur = data['edur'].T[0, x]  # And this is the duration of this event
 
-trial = channelC3[epos:epos+edur] # Then I extract the signal related the event selected.
+# Then I extract the signal related the event selected.
+trial = channelC3[epos:epos+edur]
 
 # The selected event type is 768 (Start of a trial) if you see the array of event types ('etype')
 # you can observe the next event is 772 (Cue onset tongue) with that you can deduce de class of
 # this trial: Tongue Imagery Task.
 
 # Then for know the class of this trial (7) you need to read the type of the inmediate next event
-trial_type =  data['etyp'].T[0, x+1]
+trial_type = data['etyp'].T[0, x+1]
 
 # For know the order of this events, you can see the data['etyp'] array.
 
 # You can plot this event with matplotlib
-from matplotlib import pyplot as plt
 plt.plot(trial)
 plt.show()
 ```
