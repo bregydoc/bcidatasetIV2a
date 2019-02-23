@@ -52,7 +52,7 @@ etype = data['etyp'].T[0, x] # Extract the type of the event 7 in this case the 
 epos = data['epos'].T[0, x] # This is the position of the event in the raw signal
 edur = data['edur'].T[0, x] # And this is the duration of this event
 
-trial = sig[epos:epos+edur] # Then I extract the signal related the event selected.
+trial = channelC3[epos:epos+edur] # Then I extract the signal related the event selected.
 
 # The selected event type is 768 (Start of a trial) if you see the array of event types ('etype')
 # you can observe the next event is 772 (Cue onset tongue) with that you can deduce de class of
