@@ -1,46 +1,30 @@
-# BCI Competition Dataset IV 2a for python and numpy
+# BCI Competition IV 2a Dataset for Python/NumPy
 
-This is a repository for BCI Competition 2008 dataset IV 2a fixed and optimized for python and numpy. This dataset is related with motor imagery. That is only a "port" of the original dataset, I used the original GDF files and extract the signals and events.
+This repository provides the BCI Competition 2008 Dataset IV 2a in a format optimized for Python and NumPy. The dataset is focused on motor imagery and has been converted from the original GDF files, with the signals and events extracted for ease of use.
 
-## How to use
+## Getting Started
 
-You need to read the original paper [here](http://bbci.de/competition/iv/desc_2a.pdf). In that paper the authors explain the adquisition process. The dataset contain data about motor imagery of four different motor imagery tasks, namely the imagination of movement of the left hand (class 1),right hand (class 2), both feet (class 3), and tongue (class 4).
+To get started with this dataset, we recommend reading the original paper, which details the data acquisition process. The dataset includes data for four motor imagery tasks: imagining the movement of the left hand (class 1), the right hand (class 2), both feet (class 3), and the tongue (class 4).
 
-The form of each motor imagery task is like the figure below. (the figure was extracted for the original paper).
+The dataset is structured as follows:
 
-<p align="center">
-    <img src="mi_paradigm.png">
-</p>
+- **9 subjects**
+- **288 trials** per subject, with **48 trials** for each of the four classes
 
-Exist 9 subjects and for each subject one run that consists of 48 trials (12 for each of the four possible classes), yielding a total of 288 trials per session.
+Each event in the dataset is coded according to the table provided in the original paper. For a complete understanding of the dataset, please refer to the original paper, available [here](http://bbci.de/competition/iv/desc_2a.pdf).
 
-Each event (e.g. Start of Trial) is coded using the below table, this table was extraxted for the original paper.
+### Data Files
 
-<p align="center">
-    <img src="event_table.png">
-</p>
+The data is provided in `.npz` format, which can be loaded using `numpy.load()`. Each file contains the following keys:
 
-Please, for understand the complete work read the original paper [here](http://bbci.de/competition/iv/desc_2a.pdf).
-
-### About this work
-
-The current fileformat of these files are ".npz", for load this each file (e.g. A01T.npz) you can use numpy.load() command. Below you can see an example.
-
-```python
-import numpy as np
-data = np.load('A01T.npz')
-```
-
-The names convention used for each datafile is the next:
-
--   's': contains all the raw data in a numpy array format.
--   'etyp': have all the events and its determinated type.
--   'epos': contains all the events position and its index is related with etyp and edur.
--   'edur': contains all the events duration.
+-   `s`: The raw EEG data, stored in a NumPy array.
+-   `etyp`: The type of each event.
+-   `epos`: The position of each event.
+-   `edur`: The duration of each event.
 
 ### Data Loader
 
-This repository provides a convenient data loader class `MotorImageryDataset` in `data_loader.py` to load and preprocess the data.
+A `MotorImageryDataset` class is available in `data_loader.py` to simplify loading and preprocessing the data.
 
 #### Installation
 
@@ -57,49 +41,53 @@ Here is an example of how to use the `MotorImageryDataset` class:
 ```python
 from data_loader import MotorImageryDataset
 
-# Load the data for subject 1, training session
-dataset = MotorImageryDataset('.', subject=1, session='T')
+# Load the data for subject 1's training session
+dataset = MotorImageryDataset(data_path='.', subject=1, session='T')
 
-# Get all trials and classes
+# Get all trials and corresponding classes
 trials, classes = dataset.get_trials()
 
 # Get trials and classes for specific channels (e.g., C3, Cz, C4)
 trials, classes = dataset.get_trials(channels=[7, 9, 11])
 ```
 
-### One more complex example
+## Example: Visualizing Trials
 
-In this example I've create a class with a method for extract all trials of one subject (AT01 in the example). Notate that try catch is here because some trial have a reject event, then with this try/catch I select only valid trials.
+This example demonstrates how to extract and visualize trials from one subject. The `try-except` block is used to handle trials that may have been rejected.
 
 ```python
 from data_loader import MotorImageryDataset
 from matplotlib import pyplot as plt
 
+# Load the dataset for subject 1
 datasetA1 = MotorImageryDataset('.', subject=1, session='T')
+
+# Get trials from channels C3, Cz, and C4
 trials, classes = datasetA1.get_trials_from_channels([7, 9, 11])
 
+# Plot the trials
+plt.figure(figsize=(12, 8))
 
 plt.subplot(3, 1, 1)
 plt.imshow(trials[0])
-plt.title('C3', size=22)
+plt.title('C3', fontsize=16)
+
 plt.subplot(3, 1, 2)
 plt.imshow(trials[1])
-plt.title('Cz', size=22)
+plt.title('Cz', fontsize=16)
+
 plt.subplot(3, 1, 3)
 plt.imshow(trials[2])
-plt.title('C4', size=22)
+plt.title('C4', fontsize=16)
 
+plt.tight_layout()
 plt.show()
 ```
 
 ## References
 
-*   [Brunner, C., Leeb, R., Müller-Putz, G., Schlögl, A., & Pfurtscheller, G. (2008). BCI Competition 2008–Graz data set A. Institute for Knowledge Discovery (Laboratory of Brain-Computer Interfaces), Graz University of Technology, 1-6.](http://bbci.de/competition/iv/desc_2a.pdf)
+-   Brunner, C., Leeb, R., Müller-Putz, G., Schlögl, A., & Pfurtscheller, G. (2008). *BCI Competition 2008 – Graz data set A*. Institute for Knowledge Discovery, Graz University of Technology. Retrieved from [http://bbci.de/competition/iv/desc_2a.pdf](http://bbci.de/competition/iv/desc_2a.pdf)
 
-## Contribute
+## Contributing
 
-If you want contribute please add a issue and I'll work in that. Thank for all.
-
-<p align="center">
-    <img src="iloveos.png">
-</p>
+Contributions are welcome! If you would like to contribute, please open an issue to get started.
